@@ -13,18 +13,40 @@ import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 
 //! Components
+import Header from "./components/Header";
+
+//! App
 export default function App() {
   return (
     <Router>
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Route path="/about">
-        <About />
-      </Route>
-      <Route path="/cart">
-        <Cart />
-      </Route>
+      <Header />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/cart">
+          <Cart />
+        </Route>
+        <Route path="checkout">
+          <Checkout />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/products">
+          <Products />
+        </Route>
+        <Route
+          path="/products/:id"
+          children={<ProductDetails></ProductDetails>}
+        ></Route>
+        <Route path="*">
+          <Error />
+        </Route>
+      </Switch>
     </Router>
   );
 }
