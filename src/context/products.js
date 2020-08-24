@@ -2,6 +2,7 @@
 import React from "react";
 import axios from "axios";
 import url from "../utils/URL";
+import { featuredProducts } from "../utils/helpers";
 
 //! INIT THE CONTEXT
 export const ProductContext = React.createContext();
@@ -18,8 +19,10 @@ const ProductProviderComp = ({ children }) => {
   //! use Effect will run by default after every render
   React.useEffect(() => {
     setLoading(true);
-    axios.get(`${url}/products`).then((res) => {
-      setProducts(res.data);
+    axios.get(`${url}/products`).then((response) => {
+      const featured = featuredProducts(response.data); //!Using the helper function to get the featured products
+      setFeatured(featured); //! set up featured products
+      setProducts(response.data); //! Set up all products
       setLoading(false);
     });
     //! setup second argument and perform clean up action

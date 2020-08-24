@@ -81,7 +81,7 @@ img {
   text-transform: capitalize;
   text-align: center;
   font-size: 1rem;
-  margin-top: 3rem;
+  margin-top: 10rem;
   letter-spacing: var(--mainSpacing);
 }
 .loading img {
