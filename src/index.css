@@ -80,7 +80,7 @@ img {
 .loading {
   text-transform: capitalize;
   text-align: center;
-  font-size: 1.7rem;
+  font-size: 1rem;
   margin-top: 3rem;
   letter-spacing: var(--mainSpacing);
 }
@@ -151,9 +151,9 @@ Header
 .header ul {
   display: flex;
   justify-content: space-between;
-  width: var(--smallWidth);
+  width: 94%;
   margin: 0 auto;
-  max-width: 1400px;
+  /* max-width: 1400px; */
 }
 .header ul div {
   display: flex;
@@ -161,8 +161,8 @@ Header
 }
 .header a {
   text-transform: capitalize;
-  margin: 0 0.25rem;
-  font-size: 0.85rem;
+  margin: 0 1rem !important;
+  font-size: 1.25rem !important;
   letter-spacing: 2px;
   transition: var(--mainTransition);
 }
