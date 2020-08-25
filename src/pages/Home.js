@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <Hero>
         {/* this is the children which will be rendered on Hero component */}
-        <Link to="/" className="btn btn-primary btn-hero">
+        <Link to="/products" className="btn btn-primary btn-hero">
           Check out our products
         </Link>
       </Hero>
