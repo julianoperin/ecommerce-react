@@ -14,8 +14,34 @@ function CartProviderComp({ children }) {
   const [total, setTotal] = React.useState(0);
   const [cartItems, setCartItems] = React.useState(0);
 
+  // remove item
+  const removeItem = (id) => {};
+
+  // increaseAmount
+  const increaseAmount = (id) => {};
+
+  // decrease Amount
+  const decreaseAmount = (id) => {};
+
+  // addToCart
+  const addToCart = (product) => {};
+
+  // clear cart
+  const clearCart = () => {};
+
   return (
-    <CartContext.Provider value={{ cart, total, cartItems }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        total,
+        cartItems,
+        removeItem,
+        increaseAmount,
+        decreaseAmount,
+        addToCart,
+        clearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
