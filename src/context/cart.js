@@ -10,7 +10,7 @@ export const CartContext = React.createContext();
 // useContext => ...
 
 function CartProviderComp({ children }) {
-  const [cart, setCart] = React.useState([]);
+  const [cart, setCart] = React.useState(localCart);
   const [total, setTotal] = React.useState(0);
   const [cartItems, setCartItems] = React.useState(0);
 
