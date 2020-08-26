@@ -2,6 +2,12 @@
 import React from "react";
 import localCart from "../utils/localCart";
 
+function getCartFromLocalStorage() {
+  return localStorage.getItem("cart")
+    ? JSON.parse(localStorage.getItem("cart"))
+    : [];
+}
+
 //! INIT THE CONTEXT
 export const CartContext = React.createContext();
 
@@ -10,12 +16,14 @@ export const CartContext = React.createContext();
 // useContext => ...
 
 function CartProviderComp({ children }) {
-  const [cart, setCart] = React.useState([]); // Array with all products
+  const [cart, setCart] = React.useState(getCartFromLocalStorage); // Array with all products
   const [total, setTotal] = React.useState(0); // Total value in the cart
   const [cartItems, setCartItems] = React.useState(0); // SUM ALL ITEMS IN THE CART = 12
 
   React.useEffect(() => {
-    // local storage
+    //! local storage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
     // Cart Items | SUM ALL ITEMS IN THE CART
     let newCartItems = cart.reduce((total, cartItem) => {
       // (acc,curr)
