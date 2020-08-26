@@ -10,12 +10,11 @@ export const CartContext = React.createContext();
 // useContext => ...
 
 function CartProviderComp({ children }) {
-  const [cart, setCart] = React.useState(localCart); // Array with all products
+  const [cart, setCart] = React.useState([]); // Array with all products
   const [total, setTotal] = React.useState(0); // Total value in the cart
   const [cartItems, setCartItems] = React.useState(0); // SUM ALL ITEMS IN THE CART = 12
 
   React.useEffect(() => {
-    console.log(cart);
     // local storage
     // Cart Items | SUM ALL ITEMS IN THE CART
     let newCartItems = cart.reduce((total, cartItem) => {
@@ -29,28 +28,63 @@ function CartProviderComp({ children }) {
     }, 0);
     newTotal = parseFloat(newTotal.toFixed(2));
     setTotal(newTotal);
-    // console.log(newTotal);
   }, [cart]); //only run if cart is updated
-  // remove item
+
+  //! ====== remove item
   const removeItem = (id) => {
     // setCart([...cart].filter((item) => item.id) !== id);
     let newCart = [...cart].filter((item) => item.id !== id);
     setCart(newCart);
   };
 
-  // increaseAmount
+  //! ====== increaseAmount
   const increaseAmount = (id) => {
-    const newCart = [...cart];
+    const newCart = [...cart].map((item) => {
+      return item.id === id
+        ? { ...item, amount: item.amount + 1 }
+        : { ...item };
+    });
+    setCart(newCart);
   };
 
-  // decrease Amount
-  const decreaseAmount = (id) => {};
+  //! ====== decrease Amount
+  const decreaseAmount = (id, amount) => {
+    if (amount === 1) {
+      removeItem(id);
+      return;
+    } else {
+      const newCart = [...cart].map((item) => {
+        return item.id === id
+          ? { ...item, amount: item.amount - 1 }
+          : { ...item };
+      });
+      setCart(newCart);
+    }
+  };
 
-  // addToCart
-  const addToCart = (product) => {};
+  //! ====== addToCart
+  const addToCart = (product) => {
+    const {
+      id,
+      image: { url },
+      title,
+      price,
+    } = product;
+    const item = [...cart].find((item) => item.id === id);
+    if (item) {
+      increaseAmount(id);
+      return;
+    } else {
+      const newItem = { id, image: url, title, price, amount: 1 };
+      const newCart = [...cart, newItem];
+      setCart(newCart);
+    }
+  };
 
-  // clear cart
-  const clearCart = () => {};
+  //! ====== clear cart
+  const clearCart = () => {
+    setCart([]);
+  };
 
   return (
     <CartContext.Provider
