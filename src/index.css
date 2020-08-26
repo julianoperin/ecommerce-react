@@ -18,7 +18,8 @@ Variables
   --slantedFont: "Raleway", sans-serif;
   --mainWhite: #fff;
   --offWhite: #f7f7f7;
-  --mainBackground: #f9f9f9;
+  /* --mainBackground: #f9f9f9; */
+  --mainBackground: #fff;
   --mainOverlay: rgba(35, 10, 36, 0.4);
   --mainBlack: #222;
   --mainGrey: #ececec;
@@ -381,8 +382,11 @@ Single Product
 @media screen and (min-width: 992px) {
   .single-product {
     display: grid;
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: 3fr 3fr;
     column-gap: 3rem;
+    /* justify-content: center; */
+    align-content: center;
+    min-height: 70vh;
   }
 }
 /* 
