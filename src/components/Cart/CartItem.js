@@ -1,5 +1,6 @@
 import React from "react";
-import { FaAngleUp, FaAngleDown } from "react-icons/fa";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { FaTrashAlt } from "react-icons/fa";
 import { CartContext } from "../../context/cart";
 
 export default function CartItem({ id, image, title, price, amount }) {
@@ -21,7 +22,7 @@ export default function CartItem({ id, image, title, price, amount }) {
             removeItem(id);
           }}
         >
-          remove
+          <FaTrashAlt />
         </button>
       </div>
       <div>
@@ -33,7 +34,7 @@ export default function CartItem({ id, image, title, price, amount }) {
             increaseAmount(id);
           }}
         >
-          <FaAngleUp />
+          <AiOutlinePlus />
         </button>
         <p className="item-amount">{amount}</p>
         <button
@@ -43,7 +44,7 @@ export default function CartItem({ id, image, title, price, amount }) {
             decreaseAmount(id, amount);
           }}
         >
-          <FaAngleDown />
+          <AiOutlineMinus />
         </button>
       </div>
     </article>
