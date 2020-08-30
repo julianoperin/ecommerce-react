@@ -10,15 +10,17 @@ import { UserContext } from "../context/user";
 
 function Login() {
   const history = useHistory();
+
   //setup user context
-  const { userLogin } = React.useContext(UserContext);
+  const { userLogin, showAlert, alert } = React.useContext(UserContext);
   //! state values
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [username, setUserName] = React.useState("default");
   const [isMember, setIsMember] = React.useState(true);
 
-  let isEmpty = !email || !password || !username;
+  let isEmpty = !email || !password || !username || alert.show;
+
   //TOGGLE MEMBER
   const toggleMember = () => {
     setIsMember((prevMember) => {
@@ -31,6 +33,9 @@ function Login() {
   // SUBMIT
   const handleSubmit = async (e) => {
     // Alert
+    showAlert({
+      msg: "accessing user data. Please wait!",
+    });
     e.preventDefault();
     let response;
     if (isMember) {
@@ -45,8 +50,15 @@ function Login() {
       } = response.data;
       const newUser = { token, username };
       userLogin(newUser);
+      showAlert({
+        msg: `You are logged in: ${username}. Enjoy our products!`,
+      });
       history.push("/products");
     } else {
+      showAlert({
+        msg: "There was an error. Please try again...",
+        type: "danger",
+      });
       // show alert
     }
   };
@@ -68,6 +80,7 @@ function Login() {
           />
         </div>
         {/* END OF EMAIL */}
+
         {/* PASSWORD */}
         <div className="form-control">
           <label htmlFor="password">password</label>
@@ -79,6 +92,7 @@ function Login() {
           />
         </div>
         {/* END OF PASSWORD */}
+
         {/* USERNAME */}
         {!isMember && (
           <div className="form-control">
@@ -92,6 +106,7 @@ function Login() {
           </div>
         )}
         {/* END OF USERNAME */}
+
         {/* Empty form text */}
         {isEmpty && (
           <p className="form-empty">please fill out all form fields</p>

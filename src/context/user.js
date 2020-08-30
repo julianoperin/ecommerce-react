@@ -22,8 +22,8 @@ function UserProvider({ children }) {
     localStorage.removeItem("user");
   };
   const [alert, setAlert] = React.useState({
-    show: true,
-    msg: "ai there",
+    show: false,
+    msg: "",
     type: "success",
   });
   const showAlert = ({ msg, type = "success" }) => {
