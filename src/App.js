@@ -14,12 +14,14 @@ import ProductDetails from "./pages/ProductDetails";
 
 //! Components
 import Header from "./components/Header";
+import Alert from "./components/Alert";
 
 //! App
 export default function App() {
   return (
     <Router>
       <Header />
+      <Alert />
       <Switch>
         <Route exact path="/">
           <Home />

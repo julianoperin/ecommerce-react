@@ -6,11 +6,12 @@ import registerUser from "../strapi/registerUser";
 
 //handle user
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../context/user";
 
-export default function Login() {
+function Login() {
   const history = useHistory();
   //setup user context
-
+  const { userLogin } = React.useContext(UserContext);
   //! state values
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -18,7 +19,7 @@ export default function Login() {
   const [isMember, setIsMember] = React.useState(true);
 
   let isEmpty = !email || !password || !username;
-
+  //TOGGLE MEMBER
   const toggleMember = () => {
     setIsMember((prevMember) => {
       let isMember = !prevMember;
@@ -26,17 +27,25 @@ export default function Login() {
       return isMember;
     });
   };
+
+  // SUBMIT
   const handleSubmit = async (e) => {
-    //! Alert
+    // Alert
     e.preventDefault();
     let response;
     if (isMember) {
-      // response = await loginUser
+      response = await loginUser({ email, password });
     } else {
-      // response = await registerUser
+      response = await registerUser({ email, password, username });
     }
     if (response) {
-      //
+      const {
+        jwt: token,
+        user: { username },
+      } = response.data;
+      const newUser = { token, username };
+      userLogin(newUser);
+      history.push("/products");
     } else {
       // show alert
     }
@@ -48,7 +57,7 @@ export default function Login() {
     <section className="form section">
       <h2 className="section-title">{isMember ? "sign in" : "register"}</h2>
       <form className="login-form">
-        {/* single input */}
+        {/* EMAIL */}
         <div className="form-control">
           <label htmlFor="email">email</label>
           <input
@@ -58,8 +67,8 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        {/* single input */}
-        {/* single input */}
+        {/* END OF EMAIL */}
+        {/* PASSWORD */}
         <div className="form-control">
           <label htmlFor="password">password</label>
           <input
@@ -69,8 +78,8 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {/* single input */}
-        {/* single input */}
+        {/* END OF PASSWORD */}
+        {/* USERNAME */}
         {!isMember && (
           <div className="form-control">
             <label htmlFor="username">username</label>
@@ -82,7 +91,7 @@ export default function Login() {
             />
           </div>
         )}
-        {/* single input */}
+        {/* END OF USERNAME */}
         {/* Empty form text */}
         {isEmpty && (
           <p className="form-empty">please fill out all form fields</p>
@@ -100,7 +109,7 @@ export default function Login() {
         {/* Register Link */}
         <p className="register-link">
           {isMember ? "need to register" : "already a member"}
-          <button type="button" onClick={handleSubmit}>
+          <button type="button" onClick={toggleMember}>
             click here
           </button>
         </p>
@@ -108,3 +117,5 @@ export default function Login() {
     </section>
   );
 }
+
+export default Login;
