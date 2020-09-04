@@ -1,5 +1,4 @@
 import React from "react";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //! Pages
@@ -33,7 +32,7 @@ export default function App() {
         <Route path="/cart">
           <Cart />
         </Route>
-        <PrivateRoute path="checkout">
+        <PrivateRoute path="/checkout" name="john" msg="hello">
           <Checkout />
         </PrivateRoute>
         <Route path="/login">
