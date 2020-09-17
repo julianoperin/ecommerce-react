@@ -1,6 +1,7 @@
 // Cart context
 import React from "react";
 import localCart from "../utils/localCart";
+import reducer from "./reducer";
 
 function getCartFromLocalStorage() {
   return localStorage.getItem("cart")
@@ -16,7 +17,7 @@ export const CartContext = React.createContext();
 // useContext => ...
 
 function CartProviderComp({ children }) {
-  const [cart, setCart] = React.useState(getCartFromLocalStorage); // Array with all products
+  const [cart, setCart] = React.useReducer(reducer, getCartFromLocalStorage); // Array with all products
   const [total, setTotal] = React.useState(0); // Total value in the cart
   const [cartItems, setCartItems] = React.useState(0); // SUM ALL ITEMS IN THE CART = 12
 
@@ -40,58 +41,60 @@ function CartProviderComp({ children }) {
 
   //! ====== remove item
   const removeItem = (id) => {
+    dispatchEvent({ type: "REMOVE", payload: id });
     // setCart([...cart].filter((item) => item.id) !== id);
-    let newCart = [...cart].filter((item) => item.id !== id);
-    setCart(newCart);
+    // let newCart = [...cart].filter((item) => item.id !== id);
+    // setCart(newCart);
   };
 
   //! ====== increaseAmount
   const increaseAmount = (id) => {
-    const newCart = [...cart].map((item) => {
-      return item.id === id
-        ? { ...item, amount: item.amount + 1 }
-        : { ...item };
-    });
-    setCart(newCart);
+    dispatch({ type: "INCREASE", payload: id });
+    // const newCart = [...cart].map((item) => {
+    //   return item.id === id
+    //     ? { ...item, amount: item.amount + 1 }
+    //     : { ...item };
+    // });
+    // setCart(newCart);
   };
 
   //! ====== decrease Amount
   const decreaseAmount = (id, amount) => {
-    if (amount === 1) {
-      removeItem(id);
-      return;
-    } else {
-      const newCart = [...cart].map((item) => {
-        return item.id === id
-          ? { ...item, amount: item.amount - 1 }
-          : { ...item };
-      });
-      setCart(newCart);
-    }
+    // if (amount === 1) {
+    //   removeItem(id);
+    //   return;
+    // } else {
+    //   const newCart = [...cart].map((item) => {
+    //     return item.id === id
+    //       ? { ...item, amount: item.amount - 1 }
+    //       : { ...item };
+    //   });
+    //   setCart(newCart);
+    // }
   };
 
   //! ====== addToCart
   const addToCart = (product) => {
-    const {
-      id,
-      image: { url },
-      title,
-      price,
-    } = product;
-    const item = [...cart].find((item) => item.id === id);
-    if (item) {
-      increaseAmount(id);
-      return;
-    } else {
-      const newItem = { id, image: url, title, price, amount: 1 };
-      const newCart = [...cart, newItem];
-      setCart(newCart);
-    }
+    // const {
+    //   id,
+    //   image: { url },
+    //   title,
+    //   price,
+    // } = product;
+    // const item = [...cart].find((item) => item.id === id);
+    // if (item) {
+    //   increaseAmount(id);
+    //   return;
+    // } else {
+    //   const newItem = { id, image: url, title, price, amount: 1 };
+    //   const newCart = [...cart, newItem];
+    //   setCart(newCart);
+    // }
   };
 
   //! ====== clear cart
   const clearCart = () => {
-    setCart([]);
+    // setCart([]);
   };
 
   return (
